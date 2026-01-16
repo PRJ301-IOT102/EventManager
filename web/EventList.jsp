@@ -13,6 +13,11 @@
 <body>
     <%
         User currentUser = (User) request.getAttribute("LOGGED_USER");
+        User user = (User) session.getAttribute("USER");
+        if (user == null) {
+            response.sendRedirect("login.jsp");
+            return;
+        }
         String fullName = "";
         if (currentUser != null) {
             fullName = currentUser.getFullName();

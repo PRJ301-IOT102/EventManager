@@ -20,12 +20,13 @@ public class LoginController extends HttpServlet{
        String password = request.getParameter("password");
        String url = "login.jsp";
        final String ERROR_MESSAGE = "Incorrect UserID or Password";
-
        try {
            database.UserDAO dao = new database.UserDAO();
            model.User user = dao.checkLogin(userID, password);
 
            if (user != null) {
+               HttpSession session = request.getSession();
+               session.setAttribute("USER", user);
                request.setAttribute("LOGGED_USER", user);
                url = "EventList.jsp";
            } else {
