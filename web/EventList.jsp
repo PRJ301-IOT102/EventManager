@@ -24,6 +24,10 @@
         display: flex;
         justify-content: center;
     }
+    .msg {
+        display: flex;
+        justify-content: center;
+    }
 
     .search form{
         display: flex;
@@ -80,7 +84,14 @@
             <input class="searchinput" type="text" name="search" placeholder="Search">
             <button type="submit" name="action" value="Search">Search</button>
     </form>
+
+    <%
+        String MSG = (String) request.getAttribute("MSG");
+        if(MSG!=null) {
+    %>
+    <h3 class="msg"> <%= MSG %> </h3>
     <% 
+	}
         ArrayList<Event> list = (ArrayList<Event>) request.getAttribute("list");
         if(list != null) {
     %>
