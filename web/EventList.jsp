@@ -12,9 +12,8 @@
 </head>
 <body>
     <%
-        User currentUser = (User) request.getAttribute("LOGGED_USER");
-        User user = (User) session.getAttribute("USER");
-        if (user == null) {
+        User currentUser = (User) session.getAttribute("USER");
+        if (currentUser == null) {
             response.sendRedirect("login.jsp");
             return;
         }
