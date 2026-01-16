@@ -42,6 +42,8 @@ public class MainController extends HttpServlet {
                 model.User user = dao.checkLogin(userID, password);
 
                 if (user != null) {
+                    System.out.println("Login success for: " + user.getFullName());
+                    request.setAttribute("LOGGED_USER", user);
                     url = "EventList.jsp";
                 } else {
                     request.setAttribute("ERROR", "Incorrect UserID or Password");
