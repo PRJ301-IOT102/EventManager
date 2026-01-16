@@ -16,6 +16,11 @@ import javax.servlet.http.HttpServletResponse;
  * @author patohru
  */
 public class MainController extends HttpServlet {
+    
+    private static final String LOGOUT = "Logout";
+    private static final String LOGOUT_CONTROLLER = "LogoutController";
+    private static final String SEARCH = "Search";
+    private static final String SEARCH_CONTROLLER = "SearchController";
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -28,7 +33,21 @@ public class MainController extends HttpServlet {
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        request.getRequestDispatcher("login.jsp").forward(request, response);
+        String url = "login.jsp";
+        try{
+            String action = request.getParameter("action");
+            if(LOGOUT.equals(action)) {
+                url = LOGOUT_CONTROLLER;
+            }else if(SEARCH.equals(action)){
+                url = SEARCH_CONTROLLER;
+            }
+        }catch(Exception e){
+            log("Error at Main Controller: " + e.toString());
+        }finally{
+            request.getRequestDispatcher(url).forward(request, response);
+        }
+        
+        
     }
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**

@@ -41,7 +41,7 @@ public class SearchController extends HttpServlet {
             EventDAO dao = new EventDAO();
             ArrayList<Event> list = dao.searchByName(search);
             request.setAttribute("list", list);
-            request.getRequestDispatcher("eventList.jsp").forward(request, response);
+            request.getRequestDispatcher("EventList.jsp").forward(request, response);
         }
     }
 
