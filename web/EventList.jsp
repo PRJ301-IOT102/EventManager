@@ -23,5 +23,11 @@
         }
     %>
     <h1>Welcome, <%= fullName %>!</h1>
+    <form action="MainController" method="POST">
+        <button type="submit" name="action" value="Logout">Logout</button> </br>
+        <input type="text" name="search" placeholder="Search">
+         <button type="submit" name="action" value="Search">Search</button>
+    </form>
+
 </body>
 </html>
