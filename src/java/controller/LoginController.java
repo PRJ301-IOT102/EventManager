@@ -13,29 +13,30 @@ import java.io.IOException;
 public class LoginController extends HttpServlet{
     
     @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+   protected void doPost(HttpServletRequest request, HttpServletResponse response)
+           throws ServletException, IOException {
 
-        String userID = request.getParameter("userID");
-        String password = request.getParameter("password");
-        String url = "login.jsp";
-        final String ERROR_MESSAGE = "Incorrect UserID or Password";
+       String userID = request.getParameter("userID");
+       String password = request.getParameter("password");
+       String url = "login.jsp";
+       final String ERROR_MESSAGE = "Incorrect UserID or Password";
 
-        try {
-            database.UserDAO dao = new database.UserDAO();
-            model.User user = dao.checkLogin(userID, password);
+       try {
+           database.UserDAO dao = new database.UserDAO();
+           model.User user = dao.checkLogin(userID, password);
 
-            if (user != null) {
-                url = "EventList.jsp";
-            } else {
-                request.setAttribute("ERROR", ERROR_MESSAGE);
-            }
-        } catch (Exception e) {
-            log("Login error: " + e.getMessage());
-            request.setAttribute("ERROR", "System error. Please try again.");
-        }
+           if (user != null) {
+               request.setAttribute("LOGGED_USER", user);
+               url = "EventList.jsp";
+           } else {
+               request.setAttribute("ERROR", ERROR_MESSAGE);
+           }
+       } catch (Exception e) {
+           log("Login error: " + e.getMessage());
+           request.setAttribute("ERROR", "System error. Please try again.");
+       }
 
-        request.getRequestDispatcher(url).forward(request, response);
-    }
+       request.getRequestDispatcher(url).forward(request, response);
+   }
     
 }

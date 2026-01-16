@@ -28,36 +28,8 @@ public class MainController extends HttpServlet {
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        response.setContentType("text/html;charset=UTF-8");
-        String url = "login.jsp"; 
-
-        try {
-            String action = request.getParameter("action");
-
-            if ("Login".equals(action)) {
-                String userID = request.getParameter("userID");
-                String password = request.getParameter("password");
-
-                database.UserDAO dao = new database.UserDAO();
-                model.User user = dao.checkLogin(userID, password);
-
-                if (user != null) {
-                    System.out.println("Login success for: " + user.getFullName());
-                    request.setAttribute("LOGGED_USER", user);
-                    url = "EventList.jsp";
-                } else {
-                    request.setAttribute("ERROR", "Incorrect UserID or Password");
-                }
-            }
-
-        } catch (Exception e) {
-            log("Error at MainController: " + e.getMessage());
-            request.setAttribute("ERROR", "System fk up. Please try again.");
-        }
-
-        request.getRequestDispatcher(url).forward(request, response);
+        request.getRequestDispatcher("login.jsp").forward(request, response);
     }
-
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
      * Handles the HTTP <code>GET</code> method.
