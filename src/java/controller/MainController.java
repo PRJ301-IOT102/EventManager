@@ -25,10 +25,23 @@ public class MainController extends HttpServlet {
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
+    private static final String LOGIN = "Login";
+    private static final String LOGIN_CONTROLLER = "LoginController";
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        request.getRequestDispatcher("login.jsp").forward(request, response);
+        response.setContentType("text/html;charset=UTF-8");
+        String url = "login.jsp";
+        try {
+            String action = request.getParameter("action");
+            if (LOGIN.equals(action)) {
+                url = LOGIN_CONTROLLER;
+            } 
+        } catch (Exception e) {
+            log("Error at MainController: " + e.toString());
+        } finally {
+            request.getRequestDispatcher(url).forward(request, response);
+        }
     }
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
