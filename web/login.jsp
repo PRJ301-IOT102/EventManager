@@ -8,7 +8,7 @@
     </head>
     <body>
         <h1>Login Information</h1>
-        <form action="LoginController" method="POST">
+        <form action="MainController" method="POST">
             User ID:<input type="text" name="userID" required="" /> <br><!-- comment -->
             Password:<input type="password" name="password" required="" /> <br><!-- comment -->
             <input type="submit" name="action" value="Login"/>
