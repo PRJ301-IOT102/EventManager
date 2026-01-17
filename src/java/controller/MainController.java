@@ -32,6 +32,10 @@ public class MainController extends HttpServlet {
     private static final String LOGOUT_CONTROLLER = "LogoutController";
     private static final String SEARCH = "Search";
     private static final String SEARCH_CONTROLLER = "SearchController";
+    private static final String UPDATE = "Update";
+    private static final String UPDATE_CONTROLLER = "UpdateController";
+    private static final String DELETE = "Delete";
+    private static final String DELETE_CONTROLLER = "DeleteController";
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -42,10 +46,15 @@ public class MainController extends HttpServlet {
             String action = request.getParameter("action");
             if (LOGIN.equals(action)) {
                 url = LOGIN_CONTROLLER;
-            } else if(LOGOUT.equals(action)) {
+            }else if(LOGOUT.equals(action)) {
                 url = LOGOUT_CONTROLLER;
             }else if(SEARCH.equals(action)){
                 url = SEARCH_CONTROLLER;
+            }else if(UPDATE.equals(action)) {
+                url = UPDATE_CONTROLLER;
+            }
+            else if(DELETE.equals(action)) {
+                url = DELETE_CONTROLLER;
             }
         } catch (Exception e) {
             log("Error at MainController: " + e.toString());
