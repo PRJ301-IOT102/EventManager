@@ -15,7 +15,7 @@ import model.Event;
 public class EventDAO {
     private static final String SEARCH = "SELECT * FROM tblEvents WHERE name LIKE ?";
     private static final String UPDATE = "UPDATE tblEvents SET name = ?, location = ?, date = ?, price = ?, availableSeats = ? WHERE id = ?";
-    private static final String DELETE = "DELETE tblEvents WHERE id = ?";
+    private static final String DELETE = "DELETE FROM tblEvents WHERE id = ?";
   
     public ArrayList<Event> searchByName(String search) throws SQLException{
         ArrayList<Event> list = new ArrayList<>();
@@ -62,6 +62,8 @@ public class EventDAO {
                 ps.setString(3, event.getDate());
                 ps.setFloat(4, event.getPrice());
                 ps.setInt(5, event.getAvailableSeats());
+                ps.setString(6, event.getEventID());
+                
                 checkUpdate = ps.executeUpdate() > 0 ? true : false;
             }
         } catch (Exception e) {

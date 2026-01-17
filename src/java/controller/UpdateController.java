@@ -16,11 +16,13 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import model.Event;
 import database.EventDAO;
+import javax.servlet.annotation.WebServlet;
 
 /**
  *
  * @author Sheep
  */
+@WebServlet("/UpdateController")
 public class UpdateController extends HttpServlet {
 
     /**
@@ -61,11 +63,13 @@ public class UpdateController extends HttpServlet {
             int availableSeats = Integer.parseInt(request.getParameter("availableSeats"));
             Event event = new Event(id, name, location, date, price, availableSeats);
             EventDAO dao = new EventDAO();
+            
             if(check) {
                 request.setAttribute("MSG", "Update successfully");
                 dao.update(event);
             }
-            request.getRequestDispatcher("updateEvent.jsp").forward(request, response);
+            request.getRequestDispatcher("EventList.jsp").forward(request, response);
+
          }
     }
 

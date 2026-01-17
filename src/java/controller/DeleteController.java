@@ -13,11 +13,13 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import database.EventDAO;
+import javax.servlet.annotation.WebServlet;
 
 /**
  *
  * @author thanh
  */
+@WebServlet("/DeleteController")
 public class DeleteController extends HttpServlet{
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException, SQLException {
