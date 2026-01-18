@@ -124,6 +124,17 @@
         %>                
     </table>
     </div>
+    <h2>Add New Event</h2>
+    <form action="MainController" method="POST">
+        ID: <input type="text" name="eventID" required> <br>
+        Name: <input type="text" name="eventName" required> <br>
+        Location: <input type="text" name="location" required> <br>
+        Date: <input type="text" name="date" required> <br>
+        Price: <input type="text" name="price" required> <br>
+        Available Seats: <input type="text" name="availableSeats" required> <br>
+        <input type="hidden" name="search" value="<%= request.getParameter("search")%>"> 
+        <button type="submit" name="action" value="Add">Add</button>
+    </form>
     <%   
         }
     %>
