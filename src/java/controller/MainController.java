@@ -27,15 +27,18 @@ public class MainController extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     private static final String LOGIN = "Login";
-    private static final String LOGIN_CONTROLLER = "LoginController";
+    private static final String LOGIN_CONTROLLER = "/LoginController";
     private static final String LOGOUT = "Logout";
-    private static final String LOGOUT_CONTROLLER = "LogoutController";
+    private static final String LOGOUT_CONTROLLER = "/LogoutController";
     private static final String SEARCH = "Search";
-    private static final String SEARCH_CONTROLLER = "SearchController";
+    private static final String SEARCH_CONTROLLER = "/SearchController";
     private static final String UPDATE = "Update";
-    private static final String UPDATE_CONTROLLER = "UpdateController";
+    private static final String UPDATE_CONTROLLER = "/UpdateController";
     private static final String DELETE = "Delete";
-    private static final String DELETE_CONTROLLER = "DeleteController";
+    private static final String DELETE_CONTROLLER = "/DeleteController";
+    private static final String SEATS = "FilterSeats";
+    private static final String FILTER_SEATS_CONTROLLER = "/SeatsFilterController";
+
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -52,10 +55,13 @@ public class MainController extends HttpServlet {
                 url = SEARCH_CONTROLLER;
             }else if(UPDATE.equals(action)) {
                 url = UPDATE_CONTROLLER;
-            }
-            else if(DELETE.equals(action)) {
+            }else if(DELETE.equals(action)) {
                 url = DELETE_CONTROLLER;
+            }else if (SEATS.equals(action)) {
+                url = FILTER_SEATS_CONTROLLER;
             }
+
+            
         } catch (Exception e) {
             log("Error at MainController: " + e.toString());
         } finally {
@@ -74,7 +80,7 @@ public class MainController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        doPost(request, response);
     }
 
     /**
