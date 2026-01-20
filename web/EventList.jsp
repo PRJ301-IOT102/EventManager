@@ -84,8 +84,9 @@
         }
 
         .filter-box { 
-            display: none; 
-            margin-top: 10px; 
+            display: none;
+            position: absolute;
+            top: 19%; 
             padding: 10px; 
             border: 1px solid #ddd; 
             background: #f9f9f9;  
@@ -93,7 +94,7 @@
         }
 
         .filter-box input[type="number"], input[type="date"] { 
-            width: 80px; 
+            width: 95px; 
         }
 
         .filter-box button { 
@@ -165,46 +166,62 @@
 
         <!-- Filter Section and Event Table -->
         
-            <div class="Filter">
+        <div class="Filter">
+            <form action="MainController" method="POST" id="locationForm">
+                <div class="wrapper" id="locationWrapper">
+                    <div class="select-btn">
+                        <span>Select location</span>
+                    </div>
+                    <div class="content">
+                        <input type="text" class="search-inner" placeholder="Search location">
+                        <ul name="action" class="options"></ul>
+                    </div>
+                    </div>
+                <input type="hidden" name="action" value="location">
+                <input type="hidden" name="filterType" value="location">
+                <input type="hidden" name="location" id="locationValue">
+            </form>
+
+            <button type="button" onclick="toggleFilter('dateBox')">Date</button>
+            <button type="button" onclick="toggleFilter('priceBox')">Price</button><!-- comment -->
+            <button type="button" onclick="toggleFilter('seatBox')">Seats</button>
+            
+            <div id="seatBox" class="filter-box">
                 <form action="MainController" method="POST">
-                    <div class="wrapper" id="locationWrapper">
-                        <div class="select-btn">
-                            <span>Select location</span>
-                        </div>
-                        <div class="content">
-                            <input type="text" class="search-inner" placeholder="Search location">
-                            <ul name="action" class="options"></ul>
-                        </div>
-                    </div>
-
-                    <input type="hidden" name="location" id="locationValue">
-                    <button type="button" onclick="toggleFilter('dateBox')">Date</button>
-                    <button type="button" onclick="toggleFilter('priceBox')">Price</button>
-                    <button type="button" onclick="toggleFilter('seatBox')">Seats</button>
-                    <button type="submit" name="action" value="Add" style="">Add</button>
-                    
-                    <!-- Filter Boxes -->
-                    <div id="dateBox" class="filter-box">
-                        <input type="hidden" name="filterType" value="date">
-                        From: <input type="date" name="fromDate">
-                        To: <input type="date" name="toDate">
-                        <button type="submit" name="action" value="FilterDate">Apply</button>
-                    </div>
-
-                    <div id="priceBox" class="filter-box">
-                        <input type="hidden" name="filterType" value="price">
-                        Min: <input type="number" name="minPrice">
-                        Max: <input type="number" name="maxPrice">
-                        <button type="submit" name="action" value="FilterPrice">Apply</button>
-                    </div>
-
-                    <div id="seatBox" class="filter-box">
-                        <input type="hidden" name="filterType" value="seats"> Seats ≥ <input type="number" name="minSeats" placeholder="0">
-                        <button type="submit" name="action" value="FilterSeats">Apply</button>
-                       
-                    </div>
+                    <input type="hidden" name="action" value="FilterSeats">
+                    <input type="hidden" name="filterType" value="seats">
+                    Seats ≥ <input type="number" name="minSeats" placeholder="0">
+                    <button type="submit">Apply</button>
                 </form>
             </div>
+
+            
+            <div id="dateBox" class="filter-box">
+                <form action="MainController" method="POST">
+                    <input type="hidden" name="action" value="FilterDate">
+                    From: <input type="date" name="fromDate">
+                    To: <input type="date" name="toDate">
+                    <button type="submit">Apply</button>
+                </form>
+            </div>
+            
+            
+            <div id="priceBox" class="filter-box">
+                <form action="MainController" method="POST">
+                    <input type="hidden" name="action" value="FilterPrice">
+                    Min:<input type="number" name="minPrice">
+                    Max: <input type="number" name="maxPrice">
+                    <button type="submit">Apply</button>
+                </form>
+            </div>
+
+    <!-- Add button riêng -->
+        <form action="MainController" method="POST" style="display:inline;">
+            <button type="submit" name="action" value="Add">Add</button>
+        </form>            
+    
+</div>
+  
             <% if (list != null && !list.isEmpty()) { %>
             <!-- Event Table -->
             <table>
@@ -317,6 +334,8 @@
             selectBtn.firstElementChild.textContent = value;
             document.getElementById("locationValue").value = value;
             wrapper.classList.remove("active");
+            const form = wrapper.closest("form");
+            form.submit();
         }
 
         // Filter locations search
