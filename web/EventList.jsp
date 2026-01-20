@@ -72,14 +72,18 @@
     %>
     <div class="page">
     <div class="welcome">
-    <h1>Welcome, <%= fullName %>!</h1>
-    <div>
+        <h1>Welcome, <%= fullName %>!</h1>
+    </div>
+
     <div class="search">
         <form action="MainController" method="POST">
             <button type="submit" name="action" value="Logout">Logout</button>
             <input class="searchinput" type="text" name="search" placeholder="Search">
             <button type="submit" name="action" value="Search">Search</button>
-    </form>
+        </form>
+        <form action="MainController" method="GET">
+            <button type="submit" name="action" value="Add">Add New Event</button>
+        </form>
     <% 
         ArrayList<Event> list = (ArrayList<Event>) request.getAttribute("list");
         if(list != null) {
@@ -124,6 +128,8 @@
         %>                
     </table>
     </div>
+    <h2>Add New Event</h2>
+    
     <%   
         }
     %>
