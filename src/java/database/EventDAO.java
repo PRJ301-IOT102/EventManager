@@ -16,10 +16,11 @@ public class EventDAO {
     private static final String SEARCH = "SELECT * FROM tblEvents WHERE name LIKE ?";
     private static final String UPDATE = "UPDATE tblEvents SET name = ?, location = ?, date = ?, price = ?, availableSeats = ? WHERE id = ?";
     private static final String DELETE = "DELETE FROM tblEvents WHERE id = ?";
-    private static final String FILTER_BY_LOCATION = "SELECT * FROM tblEvents WHERE location LIKE ?";
+    private static final String FILTER_BY_LOCATION = "SELECT * FROM tblEvents WHERE location = ?";
     private static final String FILTER_BY_DATE = "SELECT * FROM tblEvents WHERE date >= ? AND date <= ?";
     private static final String FILTER_BY_PRICE = "SELECT * FROM tblEvents WHERE price BETWEEN ? AND ?";
     private static final String FILTER_BY_SEATS = "SELECT * FROM tblEvents WHERE availableSeats >= ?";      
+    private static final String INSERT = "INSERT INTO tblEvents(id, name, location, date, price, availableSeats) VALUES(?, ?, ?, ?, ?, ?)";
   
     public ArrayList<Event> searchByName(String search) throws SQLException{
         ArrayList<Event> list = new ArrayList<>();
@@ -238,6 +239,34 @@ public class EventDAO {
             if (conn != null) conn.close();
         }
         return list;
+    }
+
+    //Add feature
+    public boolean add(Event event) throws SQLException, ClassNotFoundException {
+        boolean checkInsert = false;
+        Connection conn = null;
+        PreparedStatement ps = null;
+        try{
+            conn = DBUtil.getConnection();
+            if(conn != null) {
+                ps = conn.prepareStatement(INSERT);
+                
+                ps.setString(1, event.getEventID());
+                ps.setString(2, event.getName());
+                ps.setString(3, event.getLocation());
+                ps.setString(4, event.getDate());
+                ps.setFloat(5, event.getPrice());
+                ps.setInt(6, event.getAvailableSeats());
+                
+                checkInsert = ps.executeUpdate() > 0;
+            }
+        }catch(ClassNotFoundException | SQLException e) {
+            throw new SQLException(e);
+        }finally{
+            if(ps != null) ps.close();
+            if(conn != null) conn.close();
+        }
+        return checkInsert;
     }
 
 }

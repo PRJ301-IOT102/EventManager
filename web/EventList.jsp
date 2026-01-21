@@ -216,9 +216,9 @@
             </div>
 
     <!-- Add button riêng -->
-        <form action="MainController" method="POST" style="display:inline;">
+        <form action="MainController" method="GET">
             <button type="submit" name="action" value="Add">Add</button>
-        </form>            
+        </form>        
     
 </div>
   
