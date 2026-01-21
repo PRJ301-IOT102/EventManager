@@ -45,6 +45,8 @@ public class MainController extends HttpServlet {
     private static final String LOCATION = "location";
     private static final String LOCATION_CONTROLLER = "/LocationController";
 
+    private static final String ADD = "Add";
+    private static final String ADD_CONTROLLER = "AddController";
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -75,6 +77,8 @@ public class MainController extends HttpServlet {
             }else if (PRICE.equals(action)) {
                 System.out.println("\nprice filter active\n");
                 url = FILTER_PRICE_CONTROLLER;
+            }else if(ADD.equals(action)){
+                url = ADD_CONTROLLER;
             }
 
             

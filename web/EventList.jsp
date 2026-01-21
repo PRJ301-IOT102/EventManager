@@ -143,6 +143,26 @@
             return;
         }
         String fullName = currentUser.getFullName();
+        String fullName = "";
+        if (currentUser != null) {
+            fullName = currentUser.getFullName();
+        }
+    %>
+    <div class="page">
+    <div class="welcome">
+        <h1>Welcome, <%= fullName %>!</h1>
+    </div>
+
+    <div class="search">
+        <form action="MainController" method="POST">
+            <button type="submit" name="action" value="Logout">Logout</button>
+            <input class="searchinput" type="text" name="search" placeholder="Search">
+            <button type="submit" name="action" value="Search">Search</button>
+        </form>
+        <form action="MainController" method="GET">
+            <button type="submit" name="action" value="Add">Add New Event</button>
+        </form>
+    <% 
         ArrayList<Event> list = (ArrayList<Event>) request.getAttribute("list");
     %>
     
@@ -324,6 +344,12 @@
                 if (isSelected) li.classList.add("active");
                 options.appendChild(li);
             });
+        %>                
+    </table>
+    </div>
+    <h2>Add New Event</h2>
+    
+    <%   
         }
 
         addLocation();
