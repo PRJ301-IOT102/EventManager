@@ -27,15 +27,24 @@ public class MainController extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     private static final String LOGIN = "Login";
-    private static final String LOGIN_CONTROLLER = "LoginController";
+    private static final String LOGIN_CONTROLLER = "/LoginController";
     private static final String LOGOUT = "Logout";
-    private static final String LOGOUT_CONTROLLER = "LogoutController";
+    private static final String LOGOUT_CONTROLLER = "/LogoutController";
     private static final String SEARCH = "Search";
-    private static final String SEARCH_CONTROLLER = "SearchController";
+    private static final String SEARCH_CONTROLLER = "/SearchController";
     private static final String UPDATE = "Update";
-    private static final String UPDATE_CONTROLLER = "UpdateController";
+    private static final String UPDATE_CONTROLLER = "/UpdateController";
     private static final String DELETE = "Delete";
-    private static final String DELETE_CONTROLLER = "DeleteController";
+    private static final String DELETE_CONTROLLER = "/DeleteController";
+    private static final String DATE = "FilterDate";
+    private static final String DATE_FILTER_CONTROLLER = "/DateFilterController";
+    private static final String SEATS = "FilterSeats";
+    private static final String FILTER_SEATS_CONTROLLER = "/SeatsFilterController";
+    private static final String PRICE = "FilterPrice";
+    private static final String FILTER_PRICE_CONTROLLER = "/PriceFilterController";
+    private static final String LOCATION = "location";
+    private static final String LOCATION_CONTROLLER = "/LocationController";
+
     private static final String ADD = "Add";
     private static final String ADD_CONTROLLER = "AddController";
 
@@ -54,12 +63,25 @@ public class MainController extends HttpServlet {
                 url = SEARCH_CONTROLLER;
             }else if(UPDATE.equals(action)) {
                 url = UPDATE_CONTROLLER;
-            }
-            else if(DELETE.equals(action)) {
+            }else if(DELETE.equals(action)) {
                 url = DELETE_CONTROLLER;
+            }else if (SEATS.equals(action)) {
+                System.out.println("\nseats filter active\n");
+                url = FILTER_SEATS_CONTROLLER;
+            }else if (LOCATION.equals(action)) {
+                System.out.println("\nlocation filter active\n");
+                url = LOCATION_CONTROLLER;
+            }else if (DATE.equals(action)) {
+                System.out.println("\ndate filter active\n");
+                url = DATE_FILTER_CONTROLLER;
+            }else if (PRICE.equals(action)) {
+                System.out.println("\nprice filter active\n");
+                url = FILTER_PRICE_CONTROLLER;
             }else if(ADD.equals(action)){
                 url = ADD_CONTROLLER;
             }
+
+            
         } catch (Exception e) {
             log("Error at MainController: " + e.toString());
         } finally {
@@ -78,7 +100,7 @@ public class MainController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        doPost(request, response);
     }
 
     /**
