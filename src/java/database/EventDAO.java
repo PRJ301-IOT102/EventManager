@@ -16,8 +16,8 @@ public class EventDAO {
     private static final String SEARCH = "SELECT * FROM tblEvents WHERE name LIKE ?";
     private static final String UPDATE = "UPDATE tblEvents SET name = ?, location = ?, date = ?, price = ?, availableSeats = ? WHERE id = ?";
     private static final String DELETE = "DELETE FROM tblEvents WHERE id = ?";
-    private static final String FILTER_BY_LOCATION = "SELECT * FROM tblEvents WHERE location = ?";
-    //private static final String FILTER_BY_DATE = "SELECT * FROM tblEvents WHERE date >= ? AND date <= ?";
+    private static final String FILTER_BY_LOCATION = "SELECT * FROM tblEvents WHERE location LIKE ?";
+    private static final String FILTER_BY_DATE = "SELECT * FROM tblEvents WHERE date >= ? AND date <= ?";
     private static final String FILTER_BY_PRICE = "SELECT * FROM tblEvents WHERE price BETWEEN ? AND ?";
     private static final String FILTER_BY_SEATS = "SELECT * FROM tblEvents WHERE availableSeats >= ?";      
   
@@ -188,6 +188,37 @@ public class EventDAO {
             if (conn != null) {
                 ps = conn.prepareStatement(FILTER_BY_SEATS);
                 ps.setInt(1, seats);
+                rs = ps.executeQuery();
+                while (rs.next()) {
+                    String id = rs.getString("id");
+                    String name = rs.getString("name");
+                    String location = rs.getString("location");
+                    String date = rs.getString("date");
+                    float price = rs.getFloat("price");
+                    int availableSeats = rs.getInt("availableSeats");
+                    list.add(new Event(id, name, location, date, price, availableSeats));
+                }
+            }
+        } catch (ClassNotFoundException | SQLException e) {
+            throw new SQLException(e);
+        } finally {
+            if (rs != null) rs.close();
+            if (ps != null) ps.close();
+            if (conn != null) conn.close();
+        }
+        return list;
+    }
+
+    public ArrayList<Event> filterByDate(String fromDate, String toDate) throws SQLException {
+        ArrayList<Event> list = new ArrayList<>();
+        Connection conn = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        String FILTER_BY_DATE = "SELECT * FROM tblEvents WHERE date >= '" + fromDate + "' AND date <= '" + toDate + "'";
+        try {
+            conn = DBUtil.getConnection();
+            if (conn != null) {
+                ps = conn.prepareStatement(FILTER_BY_DATE);
                 rs = ps.executeQuery();
                 while (rs.next()) {
                     String id = rs.getString("id");
