@@ -41,14 +41,17 @@ public class SeatsFilterController extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
             String seatsParam = request.getParameter("minSeats");
             System.out.println("DEBUG SeatsFilter - minSeats param: " + seatsParam);
+            int minSeats = 0;
             
             if (seatsParam == null || seatsParam.trim().isEmpty()) {
-                System.out.println("DEBUG: minSeats is empty, redirecting to EventList.jsp");
-                request.getRequestDispatcher("EventList.jsp").forward(request, response);
-                return;
+                try {
+                    minSeats = Integer.parseInt(seatsParam.trim());
+                } catch (NumberFormatException e) {
+                    minSeats = 0;
+                }
             }
             
-            int minSeats = Integer.parseInt(seatsParam);
+            
             System.out.println("DEBUG: minSeats parsed: " + minSeats);
 
             EventDAO dao = new EventDAO();

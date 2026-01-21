@@ -27,8 +27,26 @@ public class PriceFilterController1 extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException, SQLException {
         response.setContentType("text/html;charset=UTF-8");
-            double minPrice = Double.parseDouble(request.getParameter("minPrice"));
-            double maxPrice = Double.parseDouble(request.getParameter("maxPrice"));
+            String minStr = request.getParameter("minPrice");
+            double minPrice = 0.0;
+            if (minStr != null && minStr.trim().length() > 0) {
+                try {
+                    minPrice = Double.parseDouble(minStr.trim());
+                } catch (NumberFormatException e) {
+                    minPrice = 0.0;
+                }
+            }
+
+            String maxStr = request.getParameter("maxPrice");
+            double maxPrice = 0.0;
+            if (maxStr != null && maxStr.trim().length() > 0) {
+                try {
+                    maxPrice = Double.parseDouble(maxStr.trim());
+                } catch (NumberFormatException e) {
+                    maxPrice = 0.0;
+                }
+            }
+            
             EventDAO dao = new EventDAO();
             List<Event> list = dao.filterByPrice(minPrice, maxPrice);
             System.out.println("DEBUG: filtered list size: " + (list != null ? list.size() : 0));

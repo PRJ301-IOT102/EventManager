@@ -209,8 +209,8 @@
             <div id="priceBox" class="filter-box">
                 <form action="MainController" method="POST">
                     <input type="hidden" name="action" value="FilterPrice">
-                    Min:<input type="number" name="minPrice">
-                    Max: <input type="number" name="maxPrice">
+                    Min:<input type="number" name="minPrice" placeholder="0.0">
+                    Max: <input type="number" name="maxPrice" placeholder="0.0">
                     <button type="submit">Apply</button>
                 </form>
             </div>
